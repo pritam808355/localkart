@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local Stores Directory – LocalKart | Find Nearby Shops</title>
+  <meta name="description" content="Discover verified neighborhood stores, Kirana shops, artisan bakeries, organic farms, and electronics outlets on LocalKart." />
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 6.5.1 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <aside class="top-announcement">
+    <span>📍 Connect with over 150+ verified local shopkeepers in your city. Support neighborhood commerce!</span>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-inner">
+        <!-- Logo -->
+        <a href="index.html" class="brand-logo" aria-label="LocalKart Home">
+          <div class="brand-icon">
+            <i class="fa-solid fa-shop"></i>
+          </div>
+          <span><span class="logo-accent">Local</span>Kart</span>
+          <span class="brand-badge">Market</span>
+        </a>
+
+        <!-- Location Selector Pill -->
+        <button type="button" class="location-btn" id="locationSelectBtn" title="Change your neighborhood">
+          <i class="fa-solid fa-location-dot"></i>
+          <span id="currentLocationText">Sector 18, Central City</span>
+          <i class="fa-solid fa-angle-down"></i>
+        </button>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links" aria-label="Main Navigation">
+          <a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i> Home</a>
+          <a href="products.html" class="nav-link"><i class="fa-solid fa-box-open"></i> Products</a>
+          <a href="stores.html" class="nav-link active"><i class="fa-solid fa-store"></i> Stores</a>
+          <a href="contact.html" class="nav-link"><i class="fa-solid fa-circle-info"></i> About &amp; Contact</a>
+          <a href="admin.html" class="nav-link" style="color: #0284c7;"><i class="fa-solid fa-gauge-high"></i> Admin Panel</a>
+        </nav>
+
+        <!-- Right CTA / Action -->
+        <div class="nav-actions">
+          <a href="contact.html#register-store" class="btn-header-cta">
+            <i class="fa-solid fa-plus"></i> List Your Store
+          </a>
+          <button type="button" class="mobile-toggle-btn" id="mobileToggleBtn" aria-label="Open mobile menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="drawer-header">
+      <div class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-shop"></i>
+        </div>
+        <span><span class="logo-accent">Local</span>Kart</span>
+      </div>
+      <button type="button" class="drawer-close" id="drawerCloseBtn" aria-label="Close navigation drawer">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <nav class="mobile-links">
+      <a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="products.html" class="nav-link"><i class="fa-solid fa-box-open"></i> Explore Products</a>
+      <a href="stores.html" class="nav-link active"><i class="fa-solid fa-store"></i> Local Stores</a>
+      <a href="contact.html" class="nav-link"><i class="fa-solid fa-circle-info"></i> About &amp; Contact</a>
+    </nav>
+    <div style="margin-top: 1.5rem;">
+      <a href="contact.html#register-store" class="btn btn-primary btn-full">
+        <i class="fa-solid fa-plus"></i> List Your Business
+      </a>
+    </div>
+  </aside>
+
+  <!-- Page Hero & Breadcrumbs -->
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <i class="fa-solid fa-angle-right"></i>
+        <span>Stores Directory</span>
+      </nav>
+      <h1 class="page-title">Neighborhood Business Directory</h1>
+      <p class="page-description">
+        Discover verified brick-and-mortar stores, organic farm outlets, and local artisans near you. Contact owners directly or visit them today.
+      </p>
+    </div>
+  </section>
+
+  <!-- Stores Directory Section -->
+  <main class="container" style="padding-top: 2.5rem; padding-bottom: 5rem;">
+    
+    <!-- Filter & Search Toolbar -->
+    <div class="stores-filter-bar">
+      <!-- Search Input -->
+      <div class="stores-search-input">
+        <i class="fa-solid fa-magnifying-glass" style="color: var(--text-light);"></i>
+        <input
+          type="text"
+          id="storesSearchInput"
+          placeholder="Search by store name, locality, or landmark..."
+        />
+      </div>
+
+      <!-- Categories Filter Pills -->
+      <div class="stores-category-pills" id="storesCategoryPills">
+        <!-- Rendered by js/stores.js -->
+      </div>
+    </div>
+
+    <!-- Active Count Counter -->
+    <div style="margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-muted); font-weight: 600;">
+      Showing <span id="storesCountDisplay" style="color: var(--dark); font-weight: 700;">0</span> verified local businesses in your region
+    </div>
+
+    <!-- Stores Responsive Grid -->
+    <div class="stores-grid" id="storesDirectoryGrid">
+      <!-- Populated dynamically by js/stores.js -->
+    </div>
+
+  </main>
+
+  <!-- Location Selection Modal -->
+  <div class="modal-backdrop" id="locationModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-location-dot" style="color: var(--primary);"></i> Select Your Neighborhood</h3>
+        <button type="button" class="modal-close-btn" id="closeLocationModal" aria-label="Close modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+          Choose your current locality to discover shops and items closest to you:
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;">
+          <button type="button" class="btn btn-secondary locality-pill-select" data-location="Sector 18, Central City" style="justify-content: flex-start;">
+            <i class="fa-solid fa-location-arrow"></i> Sector 18, Central City (Current)
+          </button>
+          <button type="button" class="btn btn-secondary locality-pill-select" data-location="Green Avenue, Farmers Market" style="justify-content: flex-start;">
+            <i class="fa-solid fa-location-dot"></i> Green Avenue, Farmers Market
+          </button>
+          <button type="button" class="btn btn-secondary locality-pill-select" data-location="Old Clock Tower, Heritage Lane" style="justify-content: flex-start;">
+            <i class="fa-solid fa-location-dot"></i> Old Clock Tower, Heritage Lane
+          </button>
+          <button type="button" class="btn btn-secondary locality-pill-select" data-location="Station Road, Main Bazaar" style="justify-content: flex-start;">
+            <i class="fa-solid fa-location-dot"></i> Station Road, Main Bazaar
+          </button>
+          <button type="button" class="btn btn-secondary locality-pill-select" data-location="Nehru Electronics Complex" style="justify-content: flex-start;">
+            <i class="fa-solid fa-location-dot"></i> Nehru Electronics Complex
+          </button>
+        </div>
+
+        <form id="pincodeForm">
+          <label style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 0.4rem;">
+            Or Enter Pincode
+          </label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="text" id="pincodeInput" class="form-control" placeholder="e.g. 560001" maxlength="6" />
+            <button type="submit" class="btn btn-primary">Apply</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Direct Store Contact Modal -->
+  <div class="modal-backdrop" id="contactStoreModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 id="modalStoreTitle">Contact Local Store</h3>
+          <p id="modalStoreLocation" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;"></p>
+        </div>
+        <button type="button" class="modal-close-btn" id="closeContactStoreModal" aria-label="Close modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; padding: 0.75rem; background: var(--bg-main); border-radius: var(--radius-md);">
+          <img id="modalStoreLogo" src="" alt="Store Logo" style="width: 44px; height: 44px; border-radius: var(--radius-sm); object-fit: cover;" />
+          <div>
+            <div id="modalStoreHours" style="font-size: 0.825rem; font-weight: 600; color: #15803d;"></div>
+            <div style="font-size: 0.775rem; color: var(--text-muted);">Direct merchant response within 15 mins</div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem;">
+          <a href="#" id="modalStoreWhatsappBtn" class="btn btn-primary" style="background-color: #25d366; border: none;">
+            <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+          </a>
+          <a href="#" id="modalStoreCallBtn" class="btn btn-secondary">
+            <i class="fa-solid fa-phone"></i> Call Store Now
+          </a>
+        </div>
+
+        <form id="directStoreInquiryForm">
+          <div class="form-group">
+            <label for="modalInquirerName">Your Name</label>
+            <input type="text" id="modalInquirerName" class="form-control" placeholder="e.g. Priya Sharma" required />
+          </div>
+          <div class="form-group">
+            <label for="modalInquirerPhone">Your Phone Number</label>
+            <input type="tel" id="modalInquirerPhone" class="form-control" placeholder="e.g. 9876543210" required />
+          </div>
+          <div class="form-group">
+            <label for="modalInquiryMessage">Message / Inquiry Details</label>
+            <textarea id="modalInquiryMessage" class="form-control" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">
+            <i class="fa-regular fa-paper-plane"></i> Send Direct Inquiry
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-top">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h2>
+            <span class="brand-icon" style="width: 32px; height: 32px; font-size: 0.95rem;">
+              <i class="fa-solid fa-shop"></i>
+            </span>
+            <span><span style="color: var(--primary);">Local</span>Kart</span>
+          </h2>
+          <p>
+            LocalKart bridges local store owners and conscious neighborhood buyers with verified catalogs and direct contact.
+          </p>
+          <div class="footer-socials">
+            <a href="#" class="social-icon" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-icon" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Explore Marketplace</h4>
+          <ul class="footer-links">
+            <li><a href="index.html" class="footer-link">Home Marketplace</a></li>
+            <li><a href="products.html" class="footer-link">Browse All Products</a></li>
+            <li><a href="stores.html" class="footer-link">Neighborhood Stores</a></li>
+            <li><a href="contact.html" class="footer-link">About LocalKart</a></li>
+            <li><a href="contact.html#register-store" class="footer-link">List Your Store</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Popular Categories</h4>
+          <ul class="footer-links">
+            <li><a href="products.html?category=grocery" class="footer-link">Grocery &amp; Kirana</a></li>
+            <li><a href="products.html?category=fruits-veg" class="footer-link">Fruits &amp; Vegetables</a></li>
+            <li><a href="products.html?category=bakery-sweets" class="footer-link">Bakery &amp; Sweets</a></li>
+            <li><a href="products.html?category=home-craft" class="footer-link">Handcrafted &amp; Decor</a></li>
+            <li><a href="products.html?category=electronics" class="footer-link">Electronics &amp; Repairs</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>LocalKart Helpline</h4>
+          <ul class="footer-contact-list">
+            <li class="footer-contact-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Hub #402, Community Trade Center, Sector 18, Central City</span>
+            </li>
+            <li class="footer-contact-item">
+              <i class="fa-solid fa-phone"></i>
+              <span>Helpline: +91 9113170895</span>
+            </li>
+            <li class="footer-contact-item">
+              <i class="fa-solid fa-envelope"></i>
+              <span>support@localkart.in</span>
+            </li>
+            <li class="footer-contact-item">
+              <i class="fa-solid fa-clock"></i>
+              <span>Support Hours: 8:00 AM - 9:00 PM</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 LocalKart Marketplace. All rights reserved.</p>
+      <div class="assignment-badge">
+        <i class="fa-solid fa-graduation-cap"></i> AI &amp; Coding Institute | 9113170895 Projects - Assignment
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/stores.js"></script>
+</body>
+</html>

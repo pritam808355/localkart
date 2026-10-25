@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin &amp; Merchant Control Panel – LocalKart</title>
+  <meta name="description" content="Central management dashboard for LocalKart stores, products, inventory, customer inquiries, and database metrics." />
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 6.5.1 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="admin-body">
+
+  <!-- 1. Admin Sidebar Navigation -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-sidebar-header">
+      <div class="admin-brand">
+        <i class="fa-solid fa-shop"></i>
+        <span>LocalKart</span>
+        <span class="admin-portal-badge">Admin</span>
+      </div>
+    </div>
+
+    <nav class="admin-nav">
+      <button type="button" class="admin-nav-item active" data-tab="overview">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Overview Dashboard</span>
+      </button>
+
+      <button type="button" class="admin-nav-item" data-tab="stores">
+        <i class="fa-solid fa-store"></i>
+        <span>Stores Management</span>
+      </button>
+
+      <button type="button" class="admin-nav-item" data-tab="products">
+        <i class="fa-solid fa-boxes-stacked"></i>
+        <span>Products Inventory</span>
+      </button>
+
+      <button type="button" class="admin-nav-item" data-tab="inquiries">
+        <i class="fa-solid fa-comments"></i>
+        <span>Customer Inquiries</span>
+      </button>
+
+      <button type="button" class="admin-nav-item" data-tab="settings">
+        <i class="fa-solid fa-database"></i>
+        <span>Database &amp; System</span>
+      </button>
+    </nav>
+
+    <div class="admin-sidebar-footer">
+      <a href="index.html" class="link-public-marketplace">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        <span>View Public Marketplace</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- 2. Main Admin Workspace -->
+  <div class="admin-main">
+    
+    <!-- Topbar -->
+    <header class="admin-topbar">
+      <div class="admin-topbar-left">
+        <button type="button" class="admin-mobile-toggle" id="adminMobileToggle" aria-label="Toggle Navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h1 class="admin-page-heading" id="adminPageHeading">Marketplace Overview</h1>
+      </div>
+
+      <div class="admin-topbar-right">
+        <!-- Database Status Indicator -->
+        <div class="db-status-pill" id="dbStatusPill">
+          <span class="db-status-dot" id="dbStatusDot"></span>
+          <span id="dbStatusText">Checking DB...</span>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-sm" id="btnOpenAddStoreModal">
+          <i class="fa-solid fa-plus"></i> Add Store
+        </button>
+
+        <button type="button" class="btn btn-secondary btn-sm" id="btnOpenAddProductModal">
+          <i class="fa-solid fa-plus"></i> Add Product
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Tab Panes -->
+    <main class="admin-content">
+
+      <!-- ===================================================================
+           TAB 1: Overview Dashboard
+           =================================================================== -->
+      <section class="admin-tab-pane active" id="tab-overview">
+        <!-- Stat Metric Cards -->
+        <div class="admin-stats-grid">
+          <div class="admin-stat-card">
+            <div class="admin-stat-info">
+              <h4>Registered Stores</h4>
+              <div class="stat-number" id="statTotalStores">0</div>
+            </div>
+            <div class="admin-stat-icon green">
+              <i class="fa-solid fa-store"></i>
+            </div>
+          </div>
+
+          <div class="admin-stat-card">
+            <div class="admin-stat-info">
+              <h4>Total Products</h4>
+              <div class="stat-number" id="statTotalProducts">0</div>
+            </div>
+            <div class="admin-stat-icon blue">
+              <i class="fa-solid fa-box-open"></i>
+            </div>
+          </div>
+
+          <div class="admin-stat-card">
+            <div class="admin-stat-info">
+              <h4>Customer Inquiries</h4>
+              <div class="stat-number" id="statTotalInquiries">0</div>
+            </div>
+            <div class="admin-stat-icon amber">
+              <i class="fa-solid fa-comments"></i>
+            </div>
+          </div>
+
+          <div class="admin-stat-card">
+            <div class="admin-stat-info">
+              <h4>Active Categories</h4>
+              <div class="stat-number" id="statTotalCategories">0</div>
+            </div>
+            <div class="admin-stat-icon purple">
+              <i class="fa-solid fa-shapes"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Inquiries Section -->
+        <div class="admin-card-panel">
+          <div class="admin-panel-header">
+            <h3 class="admin-panel-title">
+              <i class="fa-solid fa-bolt" style="color: #f59e0b;"></i> Recent Customer Inquiries &amp; Leads
+            </h3>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="document.querySelector('[data-tab=\'inquiries\']').click()">
+              View All Inquiries &rarr;
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Contact</th>
+                  <th>Inquiry Message</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="overviewRecentInquiries">
+                <!-- Injected by js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 2: Stores Management
+           =================================================================== -->
+      <section class="admin-tab-pane" id="tab-stores">
+        <div class="admin-card-panel">
+          <div class="admin-panel-header">
+            <h3 class="admin-panel-title">
+              <i class="fa-solid fa-store" style="color: #16a34a;"></i> All Registered Local Stores
+            </h3>
+            <div class="admin-panel-actions">
+              <div class="admin-search-box">
+                <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
+                <input type="text" id="adminStoreSearchInput" placeholder="Filter stores by name..." />
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Store Profile</th>
+                  <th>Category</th>
+                  <th>Locality</th>
+                  <th>Phone</th>
+                  <th>Rating</th>
+                  <th>Verification</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminStoresTableBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 3: Products Management
+           =================================================================== -->
+      <section class="admin-tab-pane" id="tab-products">
+        <div class="admin-card-panel">
+          <div class="admin-panel-header">
+            <h3 class="admin-panel-title">
+              <i class="fa-solid fa-boxes-stacked" style="color: #0284c7;"></i> Product Inventory Management
+            </h3>
+            <div class="admin-panel-actions">
+              <div class="admin-search-box">
+                <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
+                <input type="text" id="adminProductSearchInput" placeholder="Search products..." />
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Product Details</th>
+                  <th>Store</th>
+                  <th>Price</th>
+                  <th>Discount</th>
+                  <th>Stock Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminProductsTableBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 4: Customer Inquiries & Leads
+           =================================================================== -->
+      <section class="admin-tab-pane" id="tab-inquiries">
+        <div class="admin-card-panel">
+          <div class="admin-panel-header">
+            <h3 class="admin-panel-title">
+              <i class="fa-solid fa-comments" style="color: #9333ea;"></i> Customer Inquiries &amp; Leads
+            </h3>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Customer Info</th>
+                  <th>Phone</th>
+                  <th>Inquiry Details</th>
+                  <th>Target Store</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminInquiriesTableBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 5: Database & System Settings
+           =================================================================== -->
+      <section class="admin-tab-pane" id="tab-settings">
+        <div class="admin-card-panel">
+          <div class="admin-panel-header">
+            <h3 class="admin-panel-title">
+              <i class="fa-solid fa-database" style="color: #16a34a;"></i> Database Engine &amp; Status
+            </h3>
+          </div>
+          <div style="padding: 1.5rem;">
+            <div id="settingsDbStatus" style="line-height: 1.8; margin-bottom: 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.25rem; border-radius: 8px;">
+              Loading diagnostics...
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+              <button type="button" class="btn btn-primary btn-sm" id="btnExportDatabaseBackup">
+                <i class="fa-solid fa-download"></i> Export Database JSON Backup
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" id="btnReseedDatabase">
+                <i class="fa-solid fa-rotate-left"></i> Reload / Refresh Database
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Modal: Add / Edit Store -->
+  <div class="modal-backdrop" id="adminStoreModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="adminStoreModalTitle">Add New Local Store</h3>
+        <button type="button" class="modal-close-btn" id="btnCloseStoreModal" aria-label="Close modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="adminStoreForm">
+          <input type="hidden" id="storeEditId" value="" />
+          
+          <div class="form-group">
+            <label for="inputStoreName">Store Name *</label>
+            <input type="text" id="inputStoreName" class="form-control" placeholder="e.g. Agarwal Sweets & Provisions" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="inputStoreCategory">Category *</label>
+              <select id="inputStoreCategory" class="form-control" required>
+                <option value="Grocery & Kirana">Grocery &amp; Kirana</option>
+                <option value="Fruits & Vegetables">Fruits &amp; Vegetables</option>
+                <option value="Bakery & Sweets">Bakery &amp; Sweets</option>
+                <option value="Home & Handcrafted">Home &amp; Handcrafted</option>
+                <option value="Electronics & Mobile">Electronics &amp; Mobile</option>
+                <option value="Pharmacy & Wellness">Pharmacy &amp; Wellness</option>
+                <option value="Fashion & Tailoring">Fashion &amp; Tailoring</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="inputStoreLocality">Locality / Sector</label>
+              <input type="text" id="inputStoreLocality" class="form-control" placeholder="e.g. Sector 18" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="inputStorePhone">Phone Number *</label>
+              <input type="tel" id="inputStorePhone" class="form-control" placeholder="e.g. +91 98765 43210" required />
+            </div>
+            <div class="form-group">
+              <label for="inputStoreHours">Operating Hours</label>
+              <input type="text" id="inputStoreHours" class="form-control" placeholder="e.g. 8:00 AM - 10:00 PM" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputStoreAddress">Physical Address *</label>
+            <input type="text" id="inputStoreAddress" class="form-control" placeholder="Shop #, Street, Landmark" required />
+          </div>
+
+          <div class="form-group">
+            <label for="inputStoreDesc">Description</label>
+            <textarea id="inputStoreDesc" class="form-control" rows="2" placeholder="Briefly describe what makes this shop special..."></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="inputStoreImage">Cover Image URL</label>
+              <input type="url" id="inputStoreImage" class="form-control" placeholder="https://..." />
+            </div>
+            <div class="form-group">
+              <label for="inputStoreLogo">Logo Image URL</label>
+              <input type="url" id="inputStoreLogo" class="form-control" placeholder="https://..." />
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full" style="margin-top: 1rem;">
+            <i class="fa-solid fa-floppy-disk"></i> Save Store to Database
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add / Edit Product -->
+  <div class="modal-backdrop" id="adminProductModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="adminProductModalTitle">Add New Product to Inventory</h3>
+        <button type="button" class="modal-close-btn" id="btnCloseProductModal" aria-label="Close modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="adminProductForm">
+          <input type="hidden" id="productEditId" value="" />
+
+          <div class="form-group">
+            <label for="inputProductName">Product Name *</label>
+            <input type="text" id="inputProductName" class="form-control" placeholder="e.g. Pure Cold-Pressed Groundnut Oil" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="inputProductStore">Associated Store *</label>
+              <select id="inputProductStore" class="form-control" required>
+                <option value="store-1">Sharma Kirana & General Store (Sector 18)</option>
+                <option value="store-2">Green Valley Organic Farm Outlet (Green Avenue)</option>
+                <option value="store-3">BakeCraft Artisan Boulangerie (Old Clock Tower)</option>
+                <option value="store-4">Gupta Sweets & Farsan (Station Road)</option>
+                <option value="store-5">TechnoFix Electronics & Spares (Nehru Complex)</option>
+                <option value="store-6">KalaKriti Handlooms & Pottery (Craft Village)</option>
+                <option value="store-7">Amrutha Ayurvedic & Herbal Pharmacy (Temple Road)</option>
+                <option value="store-8">Elegance Threads & Custom Boutique (Gandhi Nagar)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="inputProductCategory">Category *</label>
+              <select id="inputProductCategory" class="form-control" required>
+                <option value="Grocery & Kirana" data-slug="grocery">Grocery &amp; Kirana</option>
+                <option value="Fruits & Vegetables" data-slug="fruits-veg">Fruits &amp; Vegetables</option>
+                <option value="Bakery & Sweets" data-slug="bakery-sweets">Bakery &amp; Sweets</option>
+                <option value="Home & Handcrafted" data-slug="home-craft">Home &amp; Handcrafted</option>
+                <option value="Electronics & Mobile" data-slug="electronics">Electronics &amp; Mobile</option>
+                <option value="Pharmacy & Wellness" data-slug="pharmacy">Pharmacy &amp; Wellness</option>
+                <option value="Fashion & Tailoring" data-slug="fashion">Fashion &amp; Tailoring</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="inputProductPrice">Discounted Price (₹) *</label>
+              <input type="number" id="inputProductPrice" class="form-control" placeholder="e.g. 299" required min="1" />
+            </div>
+            <div class="form-group">
+              <label for="inputProductOrigPrice">Original Price (₹)</label>
+              <input type="number" id="inputProductOrigPrice" class="form-control" placeholder="e.g. 399" min="1" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputProductDesc">Product Description</label>
+            <textarea id="inputProductDesc" class="form-control" rows="2" placeholder="Details about this local item..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="inputProductImage">Product Image URL</label>
+            <input type="url" id="inputProductImage" class="form-control" placeholder="https://..." />
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full" style="margin-top: 1rem;">
+            <i class="fa-solid fa-floppy-disk"></i> Save Product to Database
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

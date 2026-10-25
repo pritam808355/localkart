@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LocalKart – Local Business Marketplace | Discover Nearby Stores & Products</title>
+  <meta name="description" content="LocalKart connects you with neighborhood stores, local artisans, fresh produce, and trusted businesses with verified pricing and direct contact." />
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Font Awesome 6.5.1 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <aside class="top-announcement">
+    <span>🌱 Support your local neighborhood vendors! Free same-day store pickup &amp; direct merchant prices.</span>
+    <a href="stores.html">Find Nearby Stores &rarr;</a>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-inner">
+        <!-- Logo -->
+        <a href="index.html" class="brand-logo" aria-label="LocalKart Home">
+          <div class="brand-icon">
+            <i class="fa-solid fa-shop"></i>
+          </div>
+          <span><span class="logo-accent">Local</span>Kart</span>
+          <span class="brand-badge">Market</span>
+        </a>
+
+        <!-- Location Selector Pill -->
+        <button type="button" class="location-btn" id="locationSelectBtn" title="Change your neighborhood">
+          <i class="fa-solid fa-location-dot"></i>
+          <span id="currentLocationText">Sector 18, Central City</span>
+          <i class="fa-solid fa-angle-down"></i>
+        </button>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links" aria-label="Main Navigation">
+          <a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i> Home</a>
+          <a href="products.html" class="nav-link"><i class="fa-solid fa-box-open"></i> Products</a>
+          <a href="stores.html" class="nav-link"><i class="fa-solid fa-store"></i> Stores</a>
+          <a href="contact.html" class="nav-link"><i class="fa-solid fa-circle-info"></i> About &amp; Contact</a>
+          <a href="admin.html" class="nav-link" style="color: #0284c7;"><i class="fa-solid fa-gauge-high"></i> Admin Panel</a>
+        </nav>
+
+        <!-- Right CTA / Action -->
+        <div class="nav-actions">
+          <a href="contact.html#register-store" class="btn-header-cta">
+            <i class="fa-solid fa-plus"></i> List Your Store
+          </a>
+          <button type="button" class="mobile-toggle-btn" id="mobileToggleBtn" aria-label="Open mobile menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="drawer-header">
+      <div class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-shop"></i>
+        </div>
+        <span><span class="logo-accent">Local</span>Kart</span>
+      </div>
+      <button type="button" class="drawer-close" id="drawerCloseBtn" aria-label="Close navigation drawer">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <nav class="mobile-links">
+      <a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="products.html" class="nav-link"><i class="fa-solid fa-box-open"></i> Explore Products</a>
+      <a href="stores.html" class="nav-link"><i class="fa-solid fa-store"></i> Local Stores</a>
+      <a href="contact.html" class="nav-link"><i class="fa-solid fa-circle-info"></i> About &amp; Contact</a>
+    </nav>
+    <div style="margin-top: 1.5rem;">
+      <a href="contact.html#register-store" class="btn btn-primary btn-full">
+        <i class="fa-solid fa-plus"></i> List Your Business
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main>
+    <!-- 1. Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-wrapper">
+          <div class="hero-content">
+            <div class="hero-pill">
+              <i class="fa-solid fa-bullhorn"></i>
+              <span>Empowering Neighborhood Commerce</span>
+            </div>
+            <h1 class="hero-title">
+              Shop Directly from <br />
+              <span class="text-gradient">Neighborhood Stores</span>
+            </h1>
+            <p class="hero-subtitle">
+              Discover fresh farm produce, artisan bakeries, trusted Kirana provisions, and handcrafted goods in your immediate area. Direct local pricing with zero middleman markup.
+            </p>
+
+            <!-- Product Search Form -->
+            <form class="hero-search-box" id="heroSearchForm">
+              <div class="hero-search-input-group">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input
+                  type="text"
+                  id="heroSearchQuery"
+                  class="hero-search-input"
+                  placeholder="Search products, brands, or local shops..."
+                  autocomplete="off"
+                />
+              </div>
+              <div class="hero-search-divider"></div>
+              <select id="heroCategorySelect" class="hero-search-select" aria-label="Select Category">
+                <option value="all">All Categories</option>
+                <option value="grocery">Grocery &amp; Kirana</option>
+                <option value="fruits-veg">Fruits &amp; Vegetables</option>
+                <option value="bakery-sweets">Bakery &amp; Sweets</option>
+                <option value="home-craft">Home &amp; Handcrafted</option>
+                <option value="electronics">Electronics &amp; Mobile</option>
+                <option value="pharmacy">Pharmacy &amp; Wellness</option>
+              </select>
+              <button type="submit" class="btn btn-primary hero-search-btn">
+                <i class="fa-solid fa-search"></i> Search
+              </button>
+            </form>
+
+            <!-- Quick Search Tags -->
+            <div class="quick-tags">
+              <span>Popular searches:</span>
+              <a href="products.html?q=Alphonso" class="quick-tag-chip">🥭 Alphonso Mangoes</a>
+              <a href="products.html?q=Mustard+Oil" class="quick-tag-chip">🌾 Mustard Oil</a>
+              <a href="products.html?q=Sourdough" class="quick-tag-chip">🍞 Sourdough</a>
+              <a href="products.html?q=Ceramic" class="quick-tag-chip">☕ Ceramic Cups</a>
+              <a href="products.html?q=Honey" class="quick-tag-chip">🍯 Raw Honey</a>
+            </div>
+          </div>
+
+          <!-- Hero Visual Banner -->
+          <div class="hero-visual">
+            <div class="hero-banner-card">
+              <img
+                src="https://images.unsplash.com/photo-1534723452862-4c874018d66d?auto=format&fit=crop&w=800&q=80"
+                alt="Local market fresh produce and vendors"
+                loading="eager"
+              />
+            </div>
+
+            <!-- Floating Trust Badges -->
+            <div class="hero-floating-card card-left">
+              <div class="floating-icon green">
+                <i class="fa-solid fa-shield-check"></i>
+              </div>
+              <div class="floating-info">
+                <h4>100% Verified Stores</h4>
+                <p>Authentic neighborhood shops</p>
+              </div>
+            </div>
+
+            <div class="hero-floating-card card-right">
+              <div class="floating-icon amber">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
+              <div class="floating-info">
+                <h4>Instant WhatsApp Connect</h4>
+                <p>Direct chat with storekeepers</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust Highlights Bar -->
+        <div class="trust-bar">
+          <div class="trust-item">
+            <div class="trust-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+            <div class="trust-text">
+              <h4>Hyperlocal Discovery</h4>
+              <p>Find hidden gems within 2 km</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon"><i class="fa-solid fa-tag"></i></div>
+            <div class="trust-text">
+              <h4>Direct Store Prices</h4>
+              <p>Zero commissions or hidden markups</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <div class="trust-text">
+              <h4>Fast Pickup &amp; Delivery</h4>
+              <p>Pick up yourself or get local delivery</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon"><i class="fa-solid fa-handshake-angle"></i></div>
+            <div class="trust-text">
+              <h4>Empower Small Business</h4>
+              <p>Support your community's economy</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Categories Section -->
+    <section class="section-padding" style="background-color: #ffffff;">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="section-tag"><i class="fa-solid fa-grid-2"></i> Browse By Category</span>
+            <h2 class="section-title">Explore Neighborhood Markets</h2>
+            <p class="section-subtitle">Browse curated local products categorized by your daily shopping needs</p>
+          </div>
+          <a href="products.html" class="section-view-all">
+            All Categories <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="categories-grid">
+          <a href="products.html?category=grocery" class="category-card">
+            <div class="category-icon-wrapper">
+              <i class="fa-solid fa-basket-shopping"></i>
+            </div>
+            <h3 class="category-name">Grocery &amp; Kirana</h3>
+            <span class="category-count">Fresh pulses &amp; grains</span>
+          </a>
+
+          <a href="products.html?category=fruits-veg" class="category-card">
+            <div class="category-icon-wrapper">
+              <i class="fa-solid fa-carrot"></i>
+            </div>
+            <h3 class="category-name">Fruits &amp; Vegetables</h3>
+            <span class="category-count">Farm-fresh daily harvest</span>
+          </a>
+
+          <a href="products.html?category=bakery-sweets" class="category-card">
+            <div class="category-icon-wrapper">
+              <i class="fa-solid fa-cake-candles"></i>
+            </div>
+            <h3 class="category-name">Bakery &amp; Sweets</h3>
+            <span class="category-count">Sourdough &amp; Desi sweets</span>
+          </a>
+
+          <a href="products.html?category=home-craft" class="category-card">
+            <div class="category-icon-wrapper">
+              <i class="fa-solid fa-couch"></i>
+            </div>
+            <h3 class="category-name">Home &amp; Handcrafted</h3>
+            <span class="category-count">Artisan pottery &amp; decor</span>
+          </a>
+
+          <a href="products.html?category=electronics" class="category-card">
+            <div class="category-icon-wrapper">
+              <i class="fa-solid fa-plug"></i>
+            </div>
+            <h3 class="category-name">Electronics &amp; Spares</h3>
+            <span class="category-count">Accessories &amp; repairs</span>
+          </a>
+
+          <a href="products.html?category=pharmacy" class="category-card">
+            <div class="category-icon-wrapper">
+              <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+            <h3 class="category-name">Pharmacy &amp; Wellness</h3>
+            <span class="category-count">Ayurveda &amp; raw honey</span>
+          </a>
+
+          <a href="products.html?category=fashion" class="category-card">
+            <div class="category-icon-wrapper">
+              <i class="fa-solid fa-shirt"></i>
+            </div>
+            <h3 class="category-name">Fashion &amp; Tailoring</h3>
+            <span class="category-count">Boutiques &amp; alterations</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Featured Stores Section -->
+    <section class="section-padding" style="background-color: var(--bg-main);">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="section-tag"><i class="fa-solid fa-award"></i> Verified Merchants</span>
+            <h2 class="section-title">Featured Neighborhood Stores</h2>
+            <p class="section-subtitle">Top-rated family businesses and local outlets serving your area for years</p>
+          </div>
+          <a href="stores.html" class="section-view-all">
+            View All Stores <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="stores-grid" id="homeFeaturedStoresGrid">
+          <!-- Dynamically populated or fallback rendered -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Popular Products Section -->
+    <section class="section-padding" style="background-color: #ffffff;">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="section-tag"><i class="fa-solid fa-fire"></i> Best Deals Nearby</span>
+            <h2 class="section-title">Popular Local Products</h2>
+            <p class="section-subtitle">Top customer favorites available for immediate in-store pickup or local delivery</p>
+          </div>
+          <a href="products.html" class="section-view-all">
+            Explore All Products <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="products-grid" id="homePopularProductsGrid">
+          <!-- Dynamically populated or fallback rendered -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Local Business Section / Community Impact -->
+    <section class="section-padding local-business-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag"><i class="fa-solid fa-heart"></i> Why Buy Local?</span>
+          <h2 class="section-title">The LocalKart Difference</h2>
+          <p class="section-subtitle">
+            Large e-commerce giants charge hefty commissions and hurt local merchants. LocalKart puts power back into your neighborhood economy.
+          </p>
+        </div>
+
+        <div class="value-grid">
+          <div class="value-card">
+            <div class="value-icon green">
+              <i class="fa-solid fa-seedling"></i>
+            </div>
+            <h3>Purer, Fresher Products</h3>
+            <p>
+              Local fruits, cold-pressed oils, and baked breads don't sit in cross-country warehouses for months. You receive goods fresh from regional producers and farms.
+            </p>
+          </div>
+
+          <div class="value-card">
+            <div class="value-icon blue">
+              <i class="fa-solid fa-comments"></i>
+            </div>
+            <h3>Direct Shopkeeper Relationship</h3>
+            <p>
+              Chat directly with knowledgeable shop owners on WhatsApp or phone. Inquire about customized orders, bulk festival packs, and warranty service without bot agents.
+            </p>
+          </div>
+
+          <div class="value-card">
+            <div class="value-icon amber">
+              <i class="fa-solid fa-hand-holding-dollar"></i>
+            </div>
+            <h3>Keep Money in Your Community</h3>
+            <p>
+              Over 80% of money spent at local mom-and-pop shops circulates back into local schools, roads, jobs, and community growth rather than overseas corporations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Call To Action (CTA) Section -->
+    <section class="cta-banner-section">
+      <div class="container">
+        <div class="cta-banner-box">
+          <div class="cta-info">
+            <div class="cta-tag">
+              <i class="fa-solid fa-store"></i> For Local Shop Owners &amp; Artisans
+            </div>
+            <h2 class="cta-title">
+              Bring Your Neighborhood Business Online in 5 Minutes
+            </h2>
+            <p class="cta-subtitle">
+              Reach thousands of shoppers living right around your store. Zero listing fees, zero commissions, and direct customer interactions.
+            </p>
+            <div class="cta-buttons">
+              <a href="contact.html#register-store" class="btn btn-primary btn-lg">
+                <i class="fa-solid fa-rocket"></i> Register Store Free
+              </a>
+              <a href="contact.html" class="btn btn-secondary btn-lg">
+                <i class="fa-solid fa-circle-question"></i> How It Works
+              </a>
+            </div>
+          </div>
+
+          <div class="cta-perks">
+            <div class="cta-perk-item">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Zero commission fees on your sales</span>
+            </div>
+            <div class="cta-perk-item">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Direct WhatsApp &amp; phone orders from customers</span>
+            </div>
+            <div class="cta-perk-item">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Verified Merchant Badge &amp; locality visibility</span>
+            </div>
+            <div class="cta-perk-item">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Digital catalog setup assistance from LocalKart</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Location Selection Modal -->
+  <div class="modal-backdrop" id="locationModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-location-dot" style="color: var(--primary);"></i> Select Your Neighborhood</h3>
+        <button type="button" class="modal-close-btn" id="closeLocationModal" aria-label="Close modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+          Choose your current locality to discover shops and items closest to you:
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;">
+          <button type="button" class="btn btn-secondary locality-pill-select" data-location="Sector 18, Central City" style="justify-content: flex-start;">
+            <i class="fa-solid fa-location-arrow"></i> Sector 18, Central City (Current)
+          </button>
+          <button type="button" class="btn btn-secondary locality-pill-select" data-location="Green Avenue, Farmers Market" style="justify-content: flex-start;">
+            <i class="fa-solid fa-location-dot"></i> Green Avenue, Farmers Market
+          </button>
+          <button type="button" class="btn btn-secondary locality-pill-select" data-location="Old Clock Tower, Heritage Lane" style="justify-content: flex-start;">
+            <i class="fa-solid fa-location-dot"></i> Old Clock Tower, Heritage Lane
+          </button>
+          <button type="button" class="btn btn-secondary locality-pill-select" data-location="Station Road, Main Bazaar" style="justify-content: flex-start;">
+            <i class="fa-solid fa-location-dot"></i> Station Road, Main Bazaar
+          </button>
+          <button type="button" class="btn btn-secondary locality-pill-select" data-location="Nehru Electronics Complex" style="justify-content: flex-start;">
+            <i class="fa-solid fa-location-dot"></i> Nehru Electronics Complex
+          </button>
+        </div>
+
+        <form id="pincodeForm">
+          <label style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 0.4rem;">
+            Or Enter Pincode
+          </label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="text" id="pincodeInput" class="form-control" placeholder="e.g. 560001" maxlength="6" />
+            <button type="submit" class="btn btn-primary">Apply</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Direct Store Contact Modal -->
+  <div class="modal-backdrop" id="contactStoreModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 id="modalStoreTitle">Contact Local Store</h3>
+          <p id="modalStoreLocation" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;"></p>
+        </div>
+        <button type="button" class="modal-close-btn" id="closeContactStoreModal" aria-label="Close modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; padding: 0.75rem; background: var(--bg-main); border-radius: var(--radius-md);">
+          <img id="modalStoreLogo" src="" alt="Store Logo" style="width: 44px; height: 44px; border-radius: var(--radius-sm); object-fit: cover;" />
+          <div>
+            <div id="modalStoreHours" style="font-size: 0.825rem; font-weight: 600; color: #15803d;"></div>
+            <div style="font-size: 0.775rem; color: var(--text-muted);">Direct merchant response within 15 mins</div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem;">
+          <a href="#" id="modalStoreWhatsappBtn" class="btn btn-primary" style="background-color: #25d366; border: none;">
+            <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+          </a>
+          <a href="#" id="modalStoreCallBtn" class="btn btn-secondary">
+            <i class="fa-solid fa-phone"></i> Call Store Now
+          </a>
+        </div>
+
+        <form id="directStoreInquiryForm">
+          <div class="form-group">
+            <label for="modalInquirerName">Your Name</label>
+            <input type="text" id="modalInquirerName" class="form-control" placeholder="e.g. Priya Sharma" required />
+          </div>
+          <div class="form-group">
+            <label for="modalInquirerPhone">Your Phone Number</label>
+            <input type="tel" id="modalInquirerPhone" class="form-control" placeholder="e.g. 9876543210" required />
+          </div>
+          <div class="form-group">
+            <label for="modalInquiryMessage">Message / Inquiry Details</label>
+            <textarea id="modalInquiryMessage" class="form-control" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">
+            <i class="fa-regular fa-paper-plane"></i> Send Direct Inquiry
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- 7. Footer -->
+  <footer class="site-footer">
+    <div class="container footer-top">
+      <div class="footer-grid">
+        <!-- Brand Info -->
+        <div class="footer-brand">
+          <h2>
+            <span class="brand-icon" style="width: 32px; height: 32px; font-size: 0.95rem;">
+              <i class="fa-solid fa-shop"></i>
+            </span>
+            <span><span style="color: var(--primary);">Local</span>Kart</span>
+          </h2>
+          <p>
+            LocalKart is a community marketplace bridging neighborhood shoppers with local grocery, produce, bakery, and craft merchants. Supporting local economies with transparent pricing and zero middleman fees.
+          </p>
+          <div class="footer-socials">
+            <a href="#" class="social-icon" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-icon" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-column">
+          <h4>Explore Marketplace</h4>
+          <ul class="footer-links">
+            <li><a href="index.html" class="footer-link">Home Marketplace</a></li>
+            <li><a href="products.html" class="footer-link">Browse All Products</a></li>
+            <li><a href="stores.html" class="footer-link">Neighborhood Stores</a></li>
+            <li><a href="contact.html" class="footer-link">About LocalKart</a></li>
+            <li><a href="contact.html#register-store" class="footer-link">List Your Store</a></li>
+          </ul>
+        </div>
+
+        <!-- Categories -->
+        <div class="footer-column">
+          <h4>Popular Categories</h4>
+          <ul class="footer-links">
+            <li><a href="products.html?category=grocery" class="footer-link">Grocery &amp; Kirana</a></li>
+            <li><a href="products.html?category=fruits-veg" class="footer-link">Fruits &amp; Vegetables</a></li>
+            <li><a href="products.html?category=bakery-sweets" class="footer-link">Bakery &amp; Sweets</a></li>
+            <li><a href="products.html?category=home-craft" class="footer-link">Handcrafted &amp; Decor</a></li>
+            <li><a href="products.html?category=electronics" class="footer-link">Electronics &amp; Repairs</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Help -->
+        <div class="footer-column">
+          <h4>LocalKart Helpline</h4>
+          <ul class="footer-contact-list">
+            <li class="footer-contact-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Hub #402, Community Trade Center, Sector 18, Central City</span>
+            </li>
+            <li class="footer-contact-item">
+              <i class="fa-solid fa-phone"></i>
+              <span>Helpline: +91 9113170895</span>
+            </li>
+            <li class="footer-contact-item">
+              <i class="fa-solid fa-envelope"></i>
+              <span>support@localkart.in</span>
+            </li>
+            <li class="footer-contact-item">
+              <i class="fa-solid fa-clock"></i>
+              <span>Support Hours: 8:00 AM - 9:00 PM</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 LocalKart Marketplace. All rights reserved. Built for neighborhood commerce empowerment.</p>
+      <div class="assignment-badge">
+        <i class="fa-solid fa-graduation-cap"></i> AI &amp; Coding Institute | 9113170895 Projects - Assignment
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Initialize Home Page dynamic sections
+    document.addEventListener("DOMContentLoaded", async () => {
+      if (window.LocalKart && window.LocalKart.api) {
+        await LocalKart.api.initLiveSync();
+      }
+
+      // 1. Featured Stores
+      const storesContainer = document.getElementById("homeFeaturedStoresGrid");
+      if (storesContainer && window.LocalKart) {
+        const featuredStores = LocalKart.getFeaturedStores().slice(0, 3);
+        storesContainer.innerHTML = featuredStores.map(s => LocalKartUI.renderStoreCardHTML(s)).join("");
+      }
+
+      // 2. Popular Products
+      const productsContainer = document.getElementById("homePopularProductsGrid");
+      if (productsContainer && window.LocalKart) {
+        const popularProducts = LocalKart.getPopularProducts().slice(0, 8);
+        productsContainer.innerHTML = popularProducts.map(p => LocalKartUI.renderProductCardHTML(p)).join("");
+      }
+    });
+  </script>
+</body>
+</html>

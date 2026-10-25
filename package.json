@@ -1,0 +1,27 @@
+{
+  "name": "localkart-marketplace",
+  "version": "1.0.0",
+  "description": "LocalKart - Local Business Marketplace Full-Stack Platform with Node.js, Express & MongoDB",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "seed": "node server/seed.js"
+  },
+  "keywords": [
+    "marketplace",
+    "local-business",
+    "mongodb",
+    "express",
+    "nodejs",
+    "html5",
+    "css3"
+  ],
+  "author": "LocalKart Team",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.3",
+    "mongoose": "^8.24.7"
+  }
+}
