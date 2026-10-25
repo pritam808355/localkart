@@ -207,4 +207,5 @@ Later, LocalKart can be expanded into a full-stack e-commerce marketplace:
 
 > **LocalKart – Local Business Marketplace:** Developed a responsive marketplace interface using HTML5, CSS3, and JavaScript to showcase local businesses and products through categorized listings, product cards, store profiles, search UI, and responsive layouts.
 #   l o c a l k a r t  
+ #   l o c a l k a r t  
  
